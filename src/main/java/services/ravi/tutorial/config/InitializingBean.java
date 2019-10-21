@@ -42,5 +42,7 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
         membershipDao.addSillyMember();
         membershipDao.goToSleep();
 
+        accountDao.findAccounts();
+
     }
 }

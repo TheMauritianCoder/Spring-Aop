@@ -3,6 +3,9 @@ package services.ravi.tutorial.dao;
 import org.springframework.stereotype.Component;
 import services.ravi.tutorial.model.Account;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AccountDao {
 
@@ -40,7 +43,20 @@ public class AccountDao {
 		System.out.println(getClass() + ": in setServiceCode()");
 		this.serviceCode = serviceCode;
 	}
-	
+
+	public List<Account> findAccounts(){
+		List<Account> accounts = new ArrayList<>();
+
+		Account account1 = new Account();
+		account1.setName("Account 1");
+		accounts.add(account1);
+
+		Account account2 = new Account();
+		account2.setName("Account 2");
+		accounts.add(account2);
+
+		return accounts;
+	}
 	
 	
 }

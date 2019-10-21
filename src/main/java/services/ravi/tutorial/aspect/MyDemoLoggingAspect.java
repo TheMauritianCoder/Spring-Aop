@@ -1,12 +1,17 @@
 package services.ravi.tutorial.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import services.ravi.tutorial.model.Account;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Aspect
 @Component
@@ -40,6 +45,20 @@ public class MyDemoLoggingAspect {
 				System.out.println("Account Level: "+account.getLevel());
 			}
 		}
+	}
+
+	/**
+	 * Access the return value
+	 */
+	@AfterReturning(pointcut = "execution(* services.ravi.tutorial.dao.AccountDao.findAccounts(..))",
+					returning = "noticeSameNameInParam")
+	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> noticeSameNameInParam) {
+		System.out.println("Executing @AfterReturning advice");
+
+		// print out the results of the method call.
+		System.out.println("\n=====>>> result is: ");
+		noticeSameNameInParam.stream().forEach(acc -> System.out.println("Account Name: "+acc.getName()));
+
 	}
 	
 }
