@@ -24,5 +24,9 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
 
         Account account = new Account();
         accountDao.addAccount(account);
+        accountDao.addVipAccount(account,true);
+
+        accountDao.setSomething();
+        accountDao.getSomething();
     }
 }

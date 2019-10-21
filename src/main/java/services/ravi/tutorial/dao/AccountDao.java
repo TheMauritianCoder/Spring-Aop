@@ -19,4 +19,12 @@ public class AccountDao {
     }
 
 
+    public void getSomething(){
+        System.out.println("Getting something....");
+    }
+
+    public void setSomething(){
+        System.out.println("Setting something....");
+    }
+
 }

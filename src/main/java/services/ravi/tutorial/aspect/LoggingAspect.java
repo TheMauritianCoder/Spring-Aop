@@ -3,6 +3,7 @@ package services.ravi.tutorial.aspect;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -48,5 +49,42 @@ public class LoggingAspect {
         System.out.println("Printing before any method in the package services.ravi.tutorial.dao...");
     }
 
+    // Reusing Advice.
+    @Pointcut("execution(* services.ravi.tutorial.dao.*.*(..))")
+    public void forDaoPackages(){
+        System.out.println("Printing before any method in the package services.ravi.tutorial.dao...");
+    };
 
+    @Before("forDaoPackages()")
+    public void beforeAddAccountAdvice(){
+        System.out.println("Printing before pointcut forDaoPackages().");
+    }
+
+    // Combining Pointcut Declaration
+    @Before("forDaoPackages()")
+    public void performDummyAnalytics(){
+        System.out.println("Doing some dummy api analytics.");
+    }
+
+    // Applying multiple pointcut expression to a single advice. [Works like an IF statement. we can use AND(&&) OR(||) NOT (!)
+
+    @Pointcut("execution(* services.ravi.tutorial.dao.*.get*(..))")
+    private void getter(){
+        System.out.println("Running advice on getter");
+    }
+
+    @Pointcut("execution(* services.ravi.tutorial.dao.*.set*(..))")
+    private void setter(){
+        System.out.println("Running advice on setter");
+    }
+
+    @Pointcut("forDaoPackages() && !(getter() || setter())")
+    private void forDaoPackageNoGetterSetter(){
+        System.out.println("Printing... forDaoPackageNoGetterSetter() Advice");
+    }
+
+    @Before("forDaoPackageNoGetterSetter()")
+    public void beforeAddAccountAdvice2(){
+        System.out.println("Printing... beforeAddAccountAdvice2() Advice");
+    }
 }
