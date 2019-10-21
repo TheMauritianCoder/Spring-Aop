@@ -1,10 +1,7 @@
 package services.ravi.tutorial.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -62,7 +59,26 @@ public class MyDemoLoggingAspect {
 		System.out.println("\n====>>> The exception is: "+theException);
 
 	}
-	
+
+	/**
+	 * @After Advice does not have access to the exception. (If you need the exception, use AfterThrowing.
+	 * The Advice should be able to run in case of success or error.
+	 * Your code should not depend on the happy path or an exception.
+	 * Used for Logginf/Auditing mostly.
+	 *
+	 * Will run regardless of a success or failure.
+	 *
+	 * @param joinPoint
+	 *
+	 */
+	@After("execution(* services.ravi.tutorial.dao.AccountDao.findAccounts(..))")
+	public void afterFinallyFindAccountAdvice(JoinPoint joinPoint) {
+		System.out.println("Executing @After advice on method: "+joinPoint.getSignature().toShortString());
+
+	}
+
+
+
 }
 
 
