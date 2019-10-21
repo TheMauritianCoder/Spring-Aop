@@ -6,25 +6,46 @@ import services.ravi.tutorial.model.Account;
 @Component
 public class AccountDao {
 
-    public void addAccount(){
-        System.out.println(getClass()+": Adding new account...");
-    }
+	private String name;
+	private String serviceCode;
+	
+	public void addAccount(Account theAccount, boolean vipFlag) {
+		
+		System.out.println(getClass() + ": DOING MY DB WORK: ADDING AN ACCOUNT");
+		
+	}
+	
+	public boolean doWork() {
+		
+		System.out.println(getClass() + ": doWork()");
+		return false;
+	}
 
-    public void addAccount(Account account){
-        System.out.println(getClass()+": Adding new account 1 param...");
-    }
+	public String getName() {
+		System.out.println(getClass() + ": in getName()");
+		return name;
+	}
 
-    public void addVipAccount(Account account,boolean vip){
-        System.out.println(getClass()+": Adding new account 2 params...");
-    }
+	public void setName(String name) {
+		System.out.println(getClass() + ": in setName()");
+		this.name = name;
+	}
 
+	public String getServiceCode() {
+		System.out.println(getClass() + ": in getServiceCode()");
+		return serviceCode;
+	}
 
-    public void getSomething(){
-        System.out.println("Getting something....");
-    }
-
-    public void setSomething(){
-        System.out.println("Setting something....");
-    }
-
+	public void setServiceCode(String serviceCode) {
+		System.out.println(getClass() + ": in setServiceCode()");
+		this.serviceCode = serviceCode;
+	}
+	
+	
+	
 }
+
+
+
+
+

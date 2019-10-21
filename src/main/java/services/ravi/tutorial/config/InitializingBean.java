@@ -3,12 +3,11 @@ package services.ravi.tutorial.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import services.ravi.tutorial.dao.AccountDao;
+import services.ravi.tutorial.dao.MembershipDao;
 import services.ravi.tutorial.model.Account;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 @Component
@@ -19,14 +18,27 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
     @Autowired
     AccountDao accountDao;
 
+    @Autowired
+    MembershipDao membershipDao;
+
     @Override public void onApplicationEvent(ContextRefreshedEvent event) {
-        accountDao.addAccount();
 
-        Account account = new Account();
-        accountDao.addAccount(account);
-        accountDao.addVipAccount(account,true);
 
-        accountDao.setSomething();
-        accountDao.getSomething();
+        // call the business method
+        Account myAccount = new Account();
+        accountDao.addAccount(myAccount, true);
+        accountDao.doWork();
+
+        // call the accountdao getter/setter methods
+        accountDao.setName("foobar");
+        accountDao.setServiceCode("silver");
+
+        String name = accountDao.getName();
+        String code = accountDao.getServiceCode();
+
+        // call the membership business method
+        membershipDao.addSillyMember();
+        membershipDao.goToSleep();
+
     }
 }
