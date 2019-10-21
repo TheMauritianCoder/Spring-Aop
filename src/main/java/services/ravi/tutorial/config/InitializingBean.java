@@ -47,5 +47,8 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
         System.out.println("\n====> Printing after post processing data");
         accounts.stream().forEach(acc -> System.out.println(acc.toString()));
 
+        // After throwing Exception.
+        accountDao.triggerExceptionOnPurposeWhenGettingAccounts();
+
     }
 }

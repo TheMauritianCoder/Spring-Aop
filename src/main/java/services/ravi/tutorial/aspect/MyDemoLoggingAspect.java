@@ -2,6 +2,7 @@ package services.ravi.tutorial.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -47,22 +48,19 @@ public class MyDemoLoggingAspect {
 		}
 	}
 
+
 	/**
-	 * Access the return value
+	 * Note that the exception is still propagated to the main program.
+	 * To stop the propagation see the "Around" Branch
+	 * @param joinPoint
+	 * @param theException
 	 */
-	@AfterReturning(pointcut = "execution(* services.ravi.tutorial.dao.AccountDao.findAccounts(..))",
-					returning = "noticeSameNameInParam")
-	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> noticeSameNameInParam) {
-		System.out.println("Executing @AfterReturning advice");
+	@AfterThrowing(pointcut = "execution(* services.ravi.tutorial.dao.AccountDao.triggerExceptionOnPurposeWhenGettingAccounts(..))", throwing = "theException")
+	public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, Throwable theException) {
+		System.out.println("Executing @AfterThrowing advice");
 
-		// print out the results of the method call.
-		System.out.println("\n=====>>> result is: ");
-		noticeSameNameInParam.stream().forEach(acc -> System.out.println("Account Name: "+acc.getName()));
+		System.out.println("\n====>>> The exception is: "+theException);
 
-		// modify the list.
-		if(!noticeSameNameInParam.isEmpty()){
-			noticeSameNameInParam.stream().forEach(acc -> acc.setLevel("PRO"));
-		}
 	}
 	
 }

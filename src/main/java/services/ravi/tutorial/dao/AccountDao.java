@@ -57,7 +57,10 @@ public class AccountDao {
 
 		return accounts;
 	}
-	
+
+	public List<Account> triggerExceptionOnPurposeWhenGettingAccounts(){
+		throw new RuntimeException("This is an exception triggered on purpose");
+	}
 	
 }
 
