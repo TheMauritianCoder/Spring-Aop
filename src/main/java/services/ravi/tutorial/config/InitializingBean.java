@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import services.ravi.tutorial.dao.AccountDao;
-import services.ravi.tutorial.dao.MembershipDao;
-import services.ravi.tutorial.model.Account;
+import services.ravi.tutorial.service.FortuneService;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -17,38 +14,13 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
     private static final Logger LOG  = Logger.getLogger(InitializingBean.class.getName());
 
     @Autowired
-    AccountDao accountDao;
-
-    @Autowired
-    MembershipDao membershipDao;
+    FortuneService fortuneService;
 
     @Override public void onApplicationEvent(ContextRefreshedEvent event) {
+        String fortune = fortuneService.getFortune();
+        System.out.println("My Fortune is --> "+fortune);
 
-
-        // call the business method
-        Account myAccount = new Account();
-        myAccount.setName("Blabla Account");
-        myAccount.setLevel("PRO");
-        accountDao.addAccount(myAccount, true);
-        accountDao.doWork();
-
-        // call the accountdao getter/setter methods
-        accountDao.setName("foobar");
-        accountDao.setServiceCode("silver");
-
-        String name = accountDao.getName();
-        String code = accountDao.getServiceCode();
-
-        // call the membership business method
-        membershipDao.addSillyMember();
-        membershipDao.goToSleep();
-
-        List<Account> accounts = accountDao.findAccounts();
-        System.out.println("\n====> Printing after post processing data");
-        accounts.stream().forEach(acc -> System.out.println(acc.toString()));
-
-        // After throwing Exception.
-        accountDao.triggerExceptionOnPurposeWhenGettingAccounts();
-
+        String result = fortuneService.getDummyException();
+        System.out.println("The result is ---> "+result);
     }
 }
