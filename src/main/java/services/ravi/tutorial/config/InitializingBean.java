@@ -8,6 +8,7 @@ import services.ravi.tutorial.dao.AccountDao;
 import services.ravi.tutorial.dao.MembershipDao;
 import services.ravi.tutorial.model.Account;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -42,7 +43,9 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
         membershipDao.addSillyMember();
         membershipDao.goToSleep();
 
-        accountDao.findAccounts();
+        List<Account> accounts = accountDao.findAccounts();
+        System.out.println("\n====> Printing after post processing data");
+        accounts.stream().forEach(acc -> System.out.println(acc.toString()));
 
     }
 }

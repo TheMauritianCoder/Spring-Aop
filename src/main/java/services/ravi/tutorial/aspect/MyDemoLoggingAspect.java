@@ -59,6 +59,10 @@ public class MyDemoLoggingAspect {
 		System.out.println("\n=====>>> result is: ");
 		noticeSameNameInParam.stream().forEach(acc -> System.out.println("Account Name: "+acc.getName()));
 
+		// modify the list.
+		if(!noticeSameNameInParam.isEmpty()){
+			noticeSameNameInParam.stream().forEach(acc -> acc.setLevel("PRO"));
+		}
 	}
 	
 }
