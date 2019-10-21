@@ -26,6 +26,8 @@ public class InitializingBean implements ApplicationListener<ContextRefreshedEve
 
         // call the business method
         Account myAccount = new Account();
+        myAccount.setName("Blabla Account");
+        myAccount.setLevel("PRO");
         accountDao.addAccount(myAccount, true);
         accountDao.doWork();
 
